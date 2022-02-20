@@ -44,8 +44,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // URL can has double quote at start and end (e.g: "https://www.google.com") or without (e.g: https://www.google.com)
 
   app.get( "/filteredimage", async (req, res) => {
-    let imageUrl = req.query.image_url;
-    console.warn('imageUrl', imageUrl);
+    let imageUrl: string = req.query.image_url;
     
     //-------------- 1. validate the image_url query ------------------
     if (!imageUrl) {
@@ -53,17 +52,17 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     }
     
     // Remote start quote if exists
-    const firstIndex = 0;
+    const firstIndex: number = 0;
     if (imageUrl.charAt(firstIndex) === '\'' || imageUrl.charAt(firstIndex) === '\"')
       imageUrl = imageUrl.substring(1, imageUrl.length);
 
     // Remote end quote if exists
-    const lastIndex = imageUrl.length - 1;
+    const lastIndex: number = imageUrl.length - 1;
     if (imageUrl.charAt(lastIndex) === '\'' || imageUrl.charAt(lastIndex) === '\"')
       imageUrl = imageUrl.substring(0, lastIndex);
 
     // Check if is a valid URL
-    let url;
+    let url: URL;
     try {
       url = new URL(imageUrl);
     } catch(error) {
@@ -71,12 +70,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     }
 
     //-------------- 2. call filterImageFromURL(image_url) to filter the image ------------------
-    let filteredImageURL: any;
+    let filteredImageURL: string;
     try {
       filteredImageURL = await filterImageFromURL(String(url));
-    } catch (error) {      
-      console.error('error:', error);
-      
+    } catch (error) {            
       return res.status(400).send("An error occured when the server filtered the image");
     }
     
