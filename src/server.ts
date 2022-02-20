@@ -63,6 +63,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
     // Check if is a valid URL
     let url: URL;
+
     try {
       url = new URL(imageUrl);
     } catch(error) {
@@ -71,6 +72,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
     //-------------- 2. call filterImageFromURL(image_url) to filter the image ------------------
     let filteredImageURL: string;
+    
     try {
       filteredImageURL = await filterImageFromURL(String(url));
     } catch (error) {            
